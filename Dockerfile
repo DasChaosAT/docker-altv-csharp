@@ -2,21 +2,29 @@ FROM mcr.microsoft.com/dotnet/core/runtime:2.2
 LABEL maintainer="DasChaos <Twitter: @DasChaosAT>"
 
 RUN apt-get update && \
-    apt-get install -y wget unzip jq
+    apt-get install -y wget jq
 
-RUN wget --no-cache -O linux.zip https://alt-cdn.s3.nl-ams.scw.cloud/server-beta/linux.zip && \
+RUN wget --no-cache -O altv-server https://alt-cdn.s3.nl-ams.scw.cloud/server/master/x64_linux/altv-server && \
+    wget --no-cache -O libnode.so.64  https://alt-cdn.s3.nl-ams.scw.cloud/alt-node/libnode.so.64 && \
+    wget --no-cache -O vehmodels.bin https://alt-cdn.s3.nl-ams.scw.cloud/server/master/x64_win32/data/vehmodels.bin && \
+    wget --no-cache -O vehmods.bin https://alt-cdn.s3.nl-ams.scw.cloud/server/master/x64_win32/data/vehmods.bin && \
+    wget --no-cache -O libnode-module.so https://alt-cdn.s3.nl-ams.scw.cloud/alt-node/x64_linux/libnode-module.so && \
     mkdir /altv && \
-    unzip -d altv linux.zip && \
-    rm linux.zip
+    mkdir /altv/data && \
+    mkdir /altv/modules && \
+    mv altv-server /altv/ && \
+    mv libnode.so.64 /altv/ && \
+    mv vehmodels.bin /altv/data && \
+    mv vehmods.bin /altv/data && \
+    mv libnode-module.so /altv/modules
 
 ADD download_module.sh /download_module.sh
 
-RUN mkdir -p /altv/modules/ && \
-    sh download_module.sh && \
+RUN sh download_module.sh && \
     mv libcsharp-module.so /altv/modules/ && \
     rm download_module.sh
 
-RUN apt-get purge -y wget unzip jq && \
+RUN apt-get purge -y wget jq && \
     apt-get clean
 
 RUN mkdir /altv-persistend && \
