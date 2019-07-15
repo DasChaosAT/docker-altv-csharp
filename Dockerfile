@@ -1,14 +1,23 @@
-FROM mcr.microsoft.com/dotnet/core/runtime:2.2
+FROM debian:10
 LABEL maintainer="DasChaos <Twitter: @DasChaosAT>"
 
 RUN apt-get update && \
-    apt-get install -y wget jq
+    apt-get install -y wget libc-bin apt-transport-https gpg
 
-RUN wget --no-cache -O altv-server https://alt-cdn.s3.nl-ams.scw.cloud/server/master/x64_linux/altv-server && \
+RUN wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.asc.gpg && \
+    mv microsoft.asc.gpg /etc/apt/trusted.gpg.d/ && \
+    wget -q https://packages.microsoft.com/config/debian/9/prod.list && \
+    mv prod.list /etc/apt/sources.list.d/microsoft-prod.list
+
+RUN apt-get update && \
+    apt-get install -y aspnetcore-runtime-2.2
+
+RUN wget --no-cache -O altv-server https://alt-cdn.s3.nl-ams.scw.cloud/server/stable/x64_linux/altv-server && \
     wget --no-cache -O libnode.so.64  https://alt-cdn.s3.nl-ams.scw.cloud/alt-node/libnode.so.64 && \
-    wget --no-cache -O vehmodels.bin https://alt-cdn.s3.nl-ams.scw.cloud/server/master/x64_win32/data/vehmodels.bin && \
-    wget --no-cache -O vehmods.bin https://alt-cdn.s3.nl-ams.scw.cloud/server/master/x64_win32/data/vehmods.bin && \
-    wget --no-cache -O libnode-module.so https://alt-cdn.s3.nl-ams.scw.cloud/alt-node/x64_linux/libnode-module.so && \
+    wget --no-cache -O vehmodels.bin https://alt-cdn.s3.nl-ams.scw.cloud/server/stable/x64_linux/data/vehmodels.bin && \
+    wget --no-cache -O vehmods.bin https://alt-cdn.s3.nl-ams.scw.cloud/server/stable/x64_linux/data/vehmods.bin && \
+    wget --no-cache -O libnode-module.so https://alt-cdn.s3.nl-ams.scw.cloud/node-module/stable/x64_linux/libnode-module.so && \
+    wget --no-cache -O libcsharp-module.so https://alt-cdn.s3.nl-ams.scw.cloud/coreclr-module/stable/x64_linux/libcsharp-module.so && \
     mkdir /altv && \
     mkdir /altv/data && \
     mkdir /altv/modules && \
@@ -16,15 +25,10 @@ RUN wget --no-cache -O altv-server https://alt-cdn.s3.nl-ams.scw.cloud/server/ma
     mv libnode.so.64 /altv/ && \
     mv vehmodels.bin /altv/data && \
     mv vehmods.bin /altv/data && \
-    mv libnode-module.so /altv/modules
+    mv libnode-module.so /altv/modules && \
+    mv libcsharp-module.so /altv/modules
 
-ADD download_module.sh /download_module.sh
-
-RUN sh download_module.sh && \
-    mv libcsharp-module.so /altv/modules/ && \
-    rm download_module.sh
-
-RUN apt-get purge -y wget jq && \
+RUN apt-get purge -y wget && \
     apt-get clean
 
 RUN mkdir /altv-persistend && \
