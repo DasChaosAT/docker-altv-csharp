@@ -21,6 +21,7 @@ RUN wget --no-cache -O altv-server https://alt-cdn.s3.nl-ams.scw.cloud/server/st
     mkdir /altv && \
     mkdir /altv/data && \
     mkdir /altv/modules && \
+    mkdir /altv/resources-data && \
     mv altv-server /altv/ && \
     mv libnode.so.64 /altv/ && \
     mv vehmodels.bin /altv/data && \
@@ -34,9 +35,11 @@ RUN apt-get purge -y wget && \
 RUN mkdir /altv-persistend && \
     mkdir /altv-persistend/config && \
     mkdir /altv-persistend/resources && \
+    mkdir /altv-persistend/resources-data && \
     mkdir /altv-persistend/logs && \
     ln -s /altv-persistend/config /altv/config && \
     ln -s /altv-persistend/resources /altv/resources && \
+    ln -s /altv-persistend/resources-data /altv/resources-data && \
     ln -s /altv-persistend/logs /altv/logs
 
 EXPOSE 7788/tcp
