@@ -1,8 +1,8 @@
-version: "3"
+version: "3.4"
 services:
   altv:
     image: daschaos/altv-csharp:stable
-    container_name: altv
+    restart: unless-stopped
     volumes:
       - data:/altv-persistend/
     ports:

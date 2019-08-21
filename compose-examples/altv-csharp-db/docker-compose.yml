@@ -1,0 +1,21 @@
+version: "3.4"
+services:
+  altv:
+    image: daschaos/altv-csharp:stable
+    restart: unless-stopped
+    volumes:
+      - data:/altv-persistend/
+    ports:
+      - "7788:7788"
+      - "7788:7788/udp"
+  db:
+    image: mariadb
+    restart: unless-stopped
+    command: --lower_case_table_names=2
+    environment:
+      MYSQL_ROOT_PASSWORD: db_root_password
+      MYSQL_DATABASE: db_name
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_user_password
+volumes:
+  data:
