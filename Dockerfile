@@ -10,7 +10,7 @@ RUN apt-get update && \
 RUN wget --no-cache -O altv-server https://cdn.altv.mp/server/stable/x64_linux/altv-server && \
     wget --no-cache -O vehmodels.bin https://cdn.altv.mp/server/stable/x64_linux/data/vehmodels.bin&& \
     wget --no-cache -O vehmods.bin https://cdn.altv.mp/server/stable/x64_linux/data/vehmods.bin && \
-    wget --no-cache -O libnode-module.so https://cdn.altv.mp/node-module/stable/x64_linux/libnode-module.so && \
+    wget --no-cache -O libnode-module.so https://cdn.altv.mp/node-module/stable/x64_linux/modules/libnode-module.so && \
     wget --no-cache -O libnode.so.72 https://cdn.altv.mp/node-module/stable/x64_linux/libnode.so.72 && \
     wget --no-cache -O libcsharp-module.so https://cdn.altv.mp/coreclr-module/stable/x64_linux/modules/libcsharp-module.so && \
     wget --no-cache -O AltV.Net.Host.dll https://cdn.altv.mp/coreclr-module/stable/x64_linux/AltV.Net.Host.dll && \
