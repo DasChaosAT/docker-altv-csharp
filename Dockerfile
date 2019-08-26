@@ -18,7 +18,6 @@ RUN wget --no-cache -O altv-server https://cdn.altv.mp/server/stable/x64_linux/a
     mkdir /altv && \
     mkdir /altv/data && \
     mkdir /altv/modules && \
-    mkdir /altv/resources-data && \
     mv altv-server /altv/ && \
     mv libnode.so.72 /altv/ && \
     mv AltV.Net.Host.dll /altv/ && \
