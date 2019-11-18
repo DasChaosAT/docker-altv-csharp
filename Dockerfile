@@ -5,7 +5,7 @@ ENV PORT 7788
 ENV UID 0
 
 RUN apt-get update && \
-    apt-get install -y wget libc-bin
+    apt-get install -y wget libc-bin libatomic1
 
 RUN wget --no-cache -O altv-server https://cdn.altv.mp/server/stable/x64_linux/altv-server && \
     wget --no-cache -O vehmodels.bin https://cdn.altv.mp/server/stable/x64_linux/data/vehmodels.bin&& \
