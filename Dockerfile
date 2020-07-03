@@ -1,5 +1,7 @@
-FROM mcr.microsoft.com/dotnet/core/runtime:3.0
-LABEL maintainer="DasChaos <Twitter: @DasChaosAT>"
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1
+LABEL maintainer="DasChaos(Thomas Marangoni) <Twitter: @DasChaosAT>"
+
+ARG BRANCH=release
 
 ENV PORT 7788
 ENV UID 0
@@ -7,25 +9,20 @@ ENV UID 0
 RUN apt-get update && \
     apt-get install -y wget libc-bin libatomic1
 
-RUN wget --no-cache -O altv-server https://cdn.altv.mp/server/stable/x64_linux/altv-server && \
-    wget --no-cache -O vehmodels.bin https://cdn.altv.mp/server/stable/x64_linux/data/vehmodels.bin&& \
-    wget --no-cache -O vehmods.bin https://cdn.altv.mp/server/stable/x64_linux/data/vehmods.bin && \
-    wget --no-cache -O libnode-module.so https://cdn.altv.mp/node-module/stable/x64_linux/modules/libnode-module.so && \
-    wget --no-cache -O libnode.so.72 https://cdn.altv.mp/node-module/stable/x64_linux/libnode.so.72 && \
-    wget --no-cache -O libcsharp-module.so https://cdn.altv.mp/coreclr-module/stable/x64_linux/modules/libcsharp-module.so && \
-    wget --no-cache -O AltV.Net.Host.dll https://cdn.altv.mp/coreclr-module/stable/x64_linux/AltV.Net.Host.dll && \
-    wget --no-cache -O AltV.Net.Host.runtimeconfig.json https://cdn.altv.mp/coreclr-module/stable/x64_linux/AltV.Net.Host.runtimeconfig.json && \
-    mkdir /altv && \
+RUN mkdir /altv && \
     mkdir /altv/data && \
     mkdir /altv/modules && \
-    mv altv-server /altv/ && \
-    mv libnode.so.72 /altv/ && \
-    mv AltV.Net.Host.dll /altv/ && \
-    mv AltV.Net.Host.runtimeconfig.json /altv/ && \
-    mv vehmodels.bin /altv/data && \
-    mv vehmods.bin /altv/data && \
-    mv libnode-module.so /altv/modules && \
-    mv libcsharp-module.so /altv/modules
+    mkdir /altv/resources-data && \
+    wget --no-cache -O /altv/altv-server https://cdn.altv.mp/server/${BRANCH}/x64_linux/altv-server && \
+    wget --no-cache -O /altv/data/vehmodels.bin https://cdn.altv.mp/server/${BRANCH}/x64_linux/data/vehmodels.bin && \
+    wget --no-cache -O /altv/data/vehmods.bin https://cdn.altv.mp/server/${BRANCH}/x64_linux/data/vehmods.bin
+    
+    wget --no-cache -O /altv/modules/libnode-module.so https://cdn.altv.mp/js-module/${BRANCH}/x64_linux/modules/js-module/libjs-module.so && \
+    wget --no-cache -O /altv/modules/libnode.so.72 https://cdn.altv.mp/js-module/${BRANCH}/x64_linux/modules/js-module/libnode.so.72 && \
+       
+    wget --no-cache -O /altv/modules/libcsharp-module.so https://cdn.altv.mp/coreclr-module/${BRANCH}/x64_linux/modules/libcsharp-module.so && \
+    wget --no-cache -O /altv/AltV.Net.Host.dll https://cdn.altv.mp/coreclr-module/${RANCH}/x64_linux/AltV.Net.Host.dll && \
+    wget --no-cache -O /altv/AltV.Net.Host.runtimeconfig.json https://cdn.altv.mp/coreclr-module/{BRANCH}/x64_linux/AltV.Net.Host.runtimeconfig.json && \
 
 RUN apt-get purge -y wget && \
     apt-get clean
@@ -33,8 +30,8 @@ RUN apt-get purge -y wget && \
 RUN mkdir /altv-persistend && \
     mkdir /altv-persistend/config && \
     mkdir /altv-persistend/resources && \
-    mkdir /altv-persistend/resources-data && \
     mkdir /altv-persistend/logs && \
+    mkdir /altv-persistend/resources-data && \
     ln -s /altv-persistend/config /altv/config && \
     ln -s /altv-persistend/resources /altv/resources && \
     ln -s /altv-persistend/resources-data /altv/resources-data && \
@@ -52,5 +49,4 @@ RUN chmod +x /altv/altv-server
 USER ${UID}
 
 ENTRYPOINT ["/altv/start_server.sh"]
-CMD ["sh"]
-
+CMD ["bash"]
