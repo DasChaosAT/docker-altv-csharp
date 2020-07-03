@@ -22,7 +22,7 @@ RUN mkdir /altv && \
        
     wget --no-cache -O /altv/modules/libcsharp-module.so https://cdn.altv.mp/coreclr-module/${BRANCH}/x64_linux/modules/libcsharp-module.so && \
     wget --no-cache -O /altv/AltV.Net.Host.dll https://cdn.altv.mp/coreclr-module/${RANCH}/x64_linux/AltV.Net.Host.dll && \
-    wget --no-cache -O /altv/AltV.Net.Host.runtimeconfig.json https://cdn.altv.mp/coreclr-module/{BRANCH}/x64_linux/AltV.Net.Host.runtimeconfig.json && \
+    wget --no-cache -O /altv/AltV.Net.Host.runtimeconfig.json https://cdn.altv.mp/coreclr-module/{BRANCH}/x64_linux/AltV.Net.Host.runtimeconfig.json
 
 RUN apt-get purge -y wget && \
     apt-get clean
