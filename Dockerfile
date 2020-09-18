@@ -13,17 +13,17 @@ RUN mkdir /altv && \
     mkdir /altv/data && \
     mkdir /altv/resources-data && \
     mkdir -p /altv/modules/js-module && \
-    
-    wget --no-cache -O /altv/altv-server https://cdn.altv.mp/server/${BRANCH}/x64_linux/altv-server && \
-    wget --no-cache -O /altv/data/vehmodels.bin https://cdn.altv.mp/server/${BRANCH}/x64_linux/data/vehmodels.bin && \
-    wget --no-cache -O /altv/data/vehmods.bin https://cdn.altv.mp/server/${BRANCH}/x64_linux/data/vehmods.bin && \
-    
-    wget --no-cache -O /altv/modules/js-module/libjs-module.so https://cdn.altv.mp/js-module/${BRANCH}/x64_linux/modules/js-module/libjs-module.so && \
-    wget --no-cache -O /altv/modules/js-module/libnode.so.72 https://cdn.altv.mp/js-module/${BRANCH}/x64_linux/modules/js-module/libnode.so.72 && \
-       
-    wget --no-cache -O /altv/modules/libcsharp-module.so https://cdn.altv.mp/coreclr-module/${BRANCH}/x64_linux/modules/libcsharp-module.so && \
-    wget --no-cache -O /altv/AltV.Net.Host.dll https://cdn.altv.mp/coreclr-module/${BRANCH}/x64_linux/AltV.Net.Host.dll && \
-    wget --no-cache -O /altv/AltV.Net.Host.runtimeconfig.json https://cdn.altv.mp/coreclr-module/${BRANCH}/x64_linux/AltV.Net.Host.runtimeconfig.json
+    # Download server
+    wget -q --no-cache -O /altv/altv-server https://cdn.altv.mp/server/${BRANCH}/x64_linux/altv-server && \
+    wget -q --no-cache -O /altv/data/vehmodels.bin https://cdn.altv.mp/server/${BRANCH}/x64_linux/data/vehmodels.bin && \
+    wget -q --no-cache -O /altv/data/vehmods.bin https://cdn.altv.mp/server/${BRANCH}/x64_linux/data/vehmods.bin && \
+    # Download js-module
+    wget -q --no-cache -O /altv/modules/js-module/libjs-module.so https://cdn.altv.mp/js-module/${BRANCH}/x64_linux/modules/js-module/libjs-module.so && \
+    wget -q --no-cache -O /altv/modules/js-module/libnode.so.72 https://cdn.altv.mp/js-module/${BRANCH}/x64_linux/modules/js-module/libnode.so.72
+    # Download csharp-module
+    wget -q --no-cache -O /altv/modules/libcsharp-module.so https://cdn.altv.mp/coreclr-module/${BRANCH}/x64_linux/modules/libcsharp-module.so && \
+    wget -q --no-cache -O /altv/AltV.Net.Host.dll https://cdn.altv.mp/coreclr-module/${BRANCH}/x64_linux/AltV.Net.Host.dll && \
+    wget -q --no-cache -O /altv/AltV.Net.Host.runtimeconfig.json https://cdn.altv.mp/coreclr-module/${BRANCH}/x64_linux/AltV.Net.Host.runtimeconfig.json
 
 RUN apt-get purge -y wget && \
     apt-get clean
