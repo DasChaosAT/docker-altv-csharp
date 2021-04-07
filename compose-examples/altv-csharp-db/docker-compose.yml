@@ -1,7 +1,7 @@
 version: "3.4"
 services:
   altv:
-    image: daschaos/altv-csharp:stable
+    image: daschaos/altv-csharp:release
     restart: unless-stopped
     volumes:
       - data:/altv-persistend/
